@@ -11,7 +11,7 @@ LB_TransportRetravail,UB_TransportRetravail,ProbSortie,ProbDestruction,ProbRetra
 
 ButtonElement bouton_lancer;
 
-Timer timer;
+
 draw(context,lignes) {
   clear() {
     context.fillStyle = "#ffffff";
@@ -40,14 +40,14 @@ List attente(){
   return(cerclesAtt);
 }
 
-List attToSer1(){
-  List res= new List(712);
+List serv1ToSor(){
+  List res= new List(698);
   num j=0;
   for (var i = 445; i <524; i++) { //79
     res[j] = new Cercle(i, 385);
   j++;
   }
-  for (var i = 385; i>289; i--) {   //100
+  for (var i = 385; i>289; i--) {   //96
     res[j] = new Cercle(524, i);
    j++;
   }
@@ -56,7 +56,6 @@ List attToSer1(){
   j++;
   }
   res[j-1].delete();
-  print(res[j-1].gety());
   for (var i = 289; i <381; i++) {   //92 
     res[j] = new Cercle(845, i);
   j++;
@@ -82,22 +81,147 @@ List attToSer1(){
   return (res);
 }
 
-void dessin(List l, num i){
-  if(i<698){
-    l[i].delete();
-    l[i].draw();
+List serv2ToSor(){
+  List res= new List(722);
+  num j=0;
+  
+  for (var i = 445; i <524; i++) { //79
+    res[j] = new Cercle(i, 385);
+  j++;
   }
-  else
-  {
-  timer.cancel();
+  for (var i = 385; i<489; i++) {   //104
+    res[j] = new Cercle(524, i);
+   j++;
+  }
+  for (var i = 524; i <615; i++) {   //91
+    res[j] = new Cercle(i, 489);
+  j++;
+  }
+  for (var i = 845; i <855; i++) {   //10
+    res[j] = new Cercle(i, 489);
+  j++;
+  }
+  for (var i = 489; i>381; i--) {    //108
+    res[j] = new Cercle(855, i);
+   j++;
+  }
+  for (var i = 855; i<922; i++) {    //67
+    res[j] = new Cercle(i, 381);
+   j++;
+  }
+  for (var i = 381; i>314; i--) {    //67
+    res[j] = new Cercle(1160, i);
+   j++;
+  }
+  for (var i = 1160; i<1317; i++) {    //157
+    res[j] = new Cercle(i, 314);
+   j++;
+  }
+  for (var i = 314; i>275; i--) {    //39
+    res[j] = new Cercle(1317, i);
+   j++;
+  }
+  return (res);
+}
+
+List Ser1ToFile(){
+  List res= new List(1409);
+  num j=0;
+
+  for (var i = 445; i <524; i++) { //79
+    res[j] = new Cercle(i, 385);
+  j++;
+  }
+  for (var i = 385; i>289; i--) {   //96
+    res[j] = new Cercle(524, i);
+   j++;
+  }
+  for (var i = 524; i <615; i++) {   //91
+    res[j] = new Cercle(i, 289);
+  j++;
+  }
+  res[j-1].delete();
+  for (var i = 289; i <381; i++) {   //92 
+    res[j] = new Cercle(845, i);
+  j++;
+  }
+  for (var i = 845; i<922; i++) {    //77
+    res[j] = new Cercle(i, 381);
+   j++;
+  }
+  for (var i = 433; i<575; i++) {    //142
+    res[j] = new Cercle(1040, i);
+   j++;
+  }
+  for (var i = 1040; i>350; i--) {    //690
+    res[j] = new Cercle(i, 575);
+   j++;
+  }
+  for (var i = 575; i>433; i--) {    //142
+    res[j] = new Cercle(350, i);
+   j++;
+  }
+  return (res);
+}
+
+List decToFile(){
+  List res= new List(974);
+  num j=0;
+
+  for (var i = 433; i<575; i++) {    //142
+    res[j] = new Cercle(1040, i);
+   j++;
+  }
+  for (var i = 1040; i>350; i--) {    //690
+    res[j] = new Cercle(i, 575);
+   j++;
+  }
+  for (var i = 575; i>433; i--) {    //142
+    res[j] = new Cercle(350, i);
+   j++;
+  }
+  return (res);
+}
+
+
+List DectoDes() {
+
+  List res= new List(261);
+  num j=0;
+  
+  for (var i = 381; i<442; i++) {    //61
+    res[j] = new Cercle(1160, i);
+   j++;
+  }
+  for (var i = 1160; i<1317; i++) {    //157
+    res[j] = new Cercle(i, 442);
+   j++;
+  }
+  for (var i = 442; i<485; i++) {    //43
+    res[j] = new Cercle(1317, i);
+   j++;
+  }
+  return(res);
+}
+
+void dessin(List l, num i){
+  if(i<l.length-2){
+    l[i].delete();
+    l[i+1].draw();
+  }
+ if (i==l.length-2)
+  {  l[i-2].delete();
+    timer.cancel();
   }
 }
-  voidRun(num vitesse, List parcour){
-    num i=0;
-    num j=0;
-    timer = new Timer.periodic(new Duration(milliseconds:vitesse), (Timer timer) {  
-      dessin(parcour,i++);
-    });}
+
+voidRun(num vitesse, List parcour){
+  num i=0;
+      timer = new Timer.periodic(new Duration(milliseconds:vitesse), (Timer timer) {  
+        dessin(parcour,i++);
+      });
+}
+  
 // DÉFINITION DES CLASSES DE LA SIMULATION
 
 class piece {
@@ -465,7 +589,7 @@ main() {
             pieceEnCours.NbTraitements ++ ;
             //ajouter la piece à la liste des entités détruites
             Sys.EntitesDetruites.add(pieceEnCours);
-            
+                       
           }else if (Params.ProbDestruction + Params.ProbRetravail + Params.ProbSortie >= prob){
             //le chemin choisi est le retravail
             pieceEnCours.FinTraitement = Horloge;
@@ -475,11 +599,11 @@ main() {
             var eve = new Evenement();
             eve.Temps = Horloge + 3.00;                                                                                    //changer 3 pour loi uniforme
             eve.Libelle_Evenement = "RTP";
-            eve.ServeurNo = 0;
+            eve.ServeurNo = pieceEnCours.ServeurTraitmement;
+           // eve.ServeurNo = 0;
             eve.PieceTransport = pieceEnCours;
             Sys.ListEvenements.add(eve);
             eve.NbrRTP ++ ;
-            print(eve.NbrRTP);
           }
         
           //vérification de la condition de sortie à chaque fois qu'une unité est prête à sortir du serveur
@@ -560,9 +684,34 @@ main() {
       
       //ajouter l'objet sys contenant les listes d'entités traitées à l'objet params qui mémorise les paramètres et les résultats pour l'ensemble des réplications  
       Params.Resultats.add(Sys);
+
+      drawPath(context,attente());
+      num vitesse = 1;
+      num x=0;
+      
+      lancer(Evenement e){
+        /* if ((e.Libelle_Evenement=='FSP') && (e.ServeurNo==1))
+        {
+          voidRun(vitesse,serv1ToSor());
+        }          
+       
+      if ((e.Libelle_Evenement=='FSP') && (e.ServeurNo==2))
+      {
+        voidRun(vitesse,serv2ToSor());
+      }*/
+      if ((e.Libelle_Evenement=='RTP') && (e.ServeurNo==1))
+      {
+        voidRun(vitesse,Ser1ToFile());
+      }          
+      }
       
 
-    }
+      Sys.EvenementsTraites.forEach((Evenement e) =>  timer = new Timer.periodic(new Duration(seconds:10), (Timer timer) {  
+        lancer(e);
+      })
+      );
+
+      }
     
     
     
@@ -632,10 +781,7 @@ main() {
     input4.value = 'Nombre moyen de pièces retravaillées : '+(CombienPlusieursTraitementsMoyennes).toString();
     input5.value = "Taux d'occupation moyen du serveur No 1 : " + (TauxOccS1Moyen).toString();
     input6.value = "Taux d'occupation moyen du serveur No 2 " + (TauxOccS2Moyen).toString();    
-    
-    drawPath(context,attente());
-    num vitesse = 2;
-    voidRun(vitesse,attToSer1());
+
     
 });  
 }
